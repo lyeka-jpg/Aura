@@ -3,158 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blacktracksuit & Whitetracksuit Store</title>
+    <title>MoodLabStore | Eco Tracksuits</title>
     <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --accent-color: #bb86fc; /* Fialová z původního návrhu */
+            --eco-color: #2ea44f;    /* Zelená pro recyklované materiály */
+            --text-color: #e0e0e0;
+            --white: #ffffff;
+        }
+
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
-            color: #111;
         }
 
         header {
-            padding: 40px 20px;
+            padding: 20px;
             text-align: center;
-            border-bottom: 1px solid #eee;
+            background: #000;
+            border-bottom: 1px solid #333;
         }
 
-        .brand-name {
-            font-size: 2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .logo {
+            max-width: 250px;
+            height: auto;
         }
 
         .container {
             max-width: 1000px;
-            margin: 50px auto;
+            margin: 40px auto;
             padding: 0 20px;
         }
 
-        .sustainable-badge {
-            background-color: #f0fdf4;
-            color: #166534;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            margin-bottom: 40px;
+        .hero {
             text-align: center;
-            border: 1px solid #dcfce7;
+            margin-bottom: 50px;
         }
 
-        .product-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+        .eco-banner {
+            background: rgba(46, 164, 79, 0.1);
+            border: 1px solid var(--eco-color);
+            color: var(--eco-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        /* Produkty */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
         .product-card {
-            width: 400px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 40px;
+            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
         }
 
         .product-image {
             width: 100%;
             height: auto;
-            background-color: #f9f9f9;
-            transition: opacity 0.3s;
-        }
-
-        .product-image:hover {
-            opacity: 0.9;
-        }
-
-        .product-info {
-            margin-top: 20px;
-        }
-
-        .product-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .product-price {
-            font-size: 1.1rem;
-            color: #444;
+            border-radius: 10px;
             margin-bottom: 15px;
-        }
-
-        .eco-tag {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: #166534;
-            font-weight: bold;
-            margin-bottom: 15px;
+            /* Zajištění, že obrázek vyplní prostor */
             display: block;
         }
 
-        .buy-button {
-            display: inline-block;
-            background-color: #000;
-            color: #fff;
-            padding: 12px 30px;
-            text-decoration: none;
+        .price-tag {
+            font-size: 1.4rem;
             font-weight: bold;
-            border-radius: 2px;
-            transition: background 0.3s;
+            color: var(--white);
+            margin: 10px 0;
         }
 
-        .buy-button:hover {
-            background-color: #333;
+        button {
+            background-color: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 100%;
+            transition: opacity 0.2s;
         }
 
-        footer {
-            text-align: center;
-            padding: 40px;
-            font-size: 0.8rem;
-            color: #888;
-            border-top: 1px solid #eee;
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Košík */
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: #000;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Modal / Vyskakovací okno */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            border: 1px solid var(--accent-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        #cart-items {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #333;
+            padding: 10px 0;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand-name">HELLO WORLD</div>
+        <h1 style="letter-spacing: 5px;">HELLO WORLD</h1>
     </header>
 
+    <div class="cart-icon" onclick="toggleCart()">
+        🛒 Košík (<span id="cart-count">0</span>)
+    </div>
+
     <div class="container">
-        <div class="sustainable-badge">
-            🌱 Naše produkty jsou vyrobeny ze **100% recyklovaných materiálů**. Šetříme planetu, aniž bychom obětovali styl.
+        <div class="hero">
+            <h1>Udržitelný styl bez kompromisů</h1>
+            <p>Baggy střih, maximální pohodlí a respekt k přírodě.</p>
         </div>
 
-        <div class="product-grid">
-            
+        <div class="eco-banner">
+            🌱 Vyrobeno ze 100% recyklovaných materiálů.
+        </div>
+
+        <div class="products-grid">
             <div class="product-card">
                 <img src="Blacktracksuit.png" alt="Blacktracksuit" class="product-image">
-                <div class="product-info">
-                    <span class="eco-tag">Recyklovaný materiál</span>
-                    <div class="product-name">Blacktracksuit</div>
-                    <div class="product-price">1 490 Kč</div>
-                    <a href="#" class="buy-button">DO KOŠÍKU</a>
-                </div>
+                <h3>Blacktracksuit</h3>
+                <p>Baggy styl, nadýchaný materiál, černá jako noc.</p>
+                <p class="price-tag">1 490 Kč</p>
+                <button onclick="addToCart('Blacktracksuit', 1490)">Do košíku</button>
             </div>
 
             <div class="product-card">
                 <img src="Whitetracksuit.png" alt="Whitetracksuit" class="product-image">
-                <div class="product-info">
-                    <span class="eco-tag">Recyklovaný materiál</span>
-                    <div class="product-name">Whitetracksuit</div>
-                    <div class="product-price">1 490 Kč</div>
-                    <a href="#" class="buy-button">DO KOŠÍKU</a>
-                </div>
+                <h3>Whitetracksuit</h3>
+                <p>Čistý design na černém pozadí. Baggy fit.</p>
+                <p class="price-tag">1 490 Kč</p>
+                <button onclick="addToCart('Whitetracksuit', 1490)">Do košíku</button>
             </div>
-
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 HELLO WORLD. Všechna práva vyhrazena.
-    </footer>
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleCart()">&times;</span>
+            <h2>Váš košík</h2>
+            <div id="cart-items">
+                </div>
+            <p><strong>Celkem: <span id="cart-total">0</span> Kč</strong></p>
+            <button style="width: 100%;" onclick="checkout()">Dokončit objednávku</button>
+        </div>
+    </div>
 
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(name, price) {
+            cart.push({name, price});
+            total += price;
+            updateCartUI();
+            // Malá vizuální zpětná vazba místo otravného alertu
+            console.log(name + ' přidáno');
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const li = document.createElement('div');
+                li.className = 'cart-item';
+                li.innerHTML = `<span>${item.name}</span> <span>${item.price} Kč</span>`;
+                cartItemsContainer.appendChild(li);
+            });
+            
+            document.getElementById('cart-total').innerText = total.toLocaleString();
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function checkout() {
+            if(cart.length === 0) {
+                alert("Košík je prázdný!");
+            } else {
+                alert("Děkujeme za váš zájem o udržitelnou módu! Celkem: " + total + " Kč.");
+                cart = [];
+                total = 0;
+                updateCartUI();
+                toggleCart();
+            }
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('cart-modal');
+            if (event.target == modal) {
+                toggleCart();
+            }
+        }
+    </script>
 </body>
 </html>
