@@ -1,81 +1,160 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>Aura Shop</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: #f5f5f5;
-      text-align: center;
-    }
-    h1 {
-      background: black;
-      color: white;
-      padding: 15px;
-    }
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .product {
-      background: white;
-      margin: 15px;
-      padding: 15px;
-      border-radius: 10px;
-      width: 250px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    .price {
-      font-size: 20px;
-      color: green;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blacktracksuit & Whitetracksuit Store</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #111;
+        }
+
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .brand-name {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .sustainable-badge {
+            background-color: #f0fdf4;
+            color: #166534;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 1px solid #dcfce7;
+        }
+
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .product-card {
+            width: 400px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            background-color: #f9f9f9;
+            transition: opacity 0.3s;
+        }
+
+        .product-image:hover {
+            opacity: 0.9;
+        }
+
+        .product-info {
+            margin-top: 20px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .eco-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #166534;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 2px;
+            transition: background 0.3s;
+        }
+
+        .buy-button:hover {
+            background-color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.8rem;
+            color: #888;
+            border-top: 1px solid #eee;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Aura Clothing</h1>
+    <header>
+        <div class="brand-name">HELLO WORLD</div>
+    </header>
 
-<div class="products" id="products"></div>
+    <div class="container">
+        <div class="sustainable-badge">
+            🌱 Naše produkty jsou vyrobeny ze **100% recyklovaných materiálů**. Šetříme planetu, aniž bychom obětovali styl.
+        </div>
 
-<script>
-const items = [
-  { name: "Mikina Aura", category: "hoodie", price: 899 },
-  { name: "Tepláky Aura", category: "sweatpants", price: 799 },
-  { name: "Tričko Aura", category: "tshirt", price: 499 }
-];
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <img src="Blacktracksuit.png" alt="Blacktracksuit" class="product-image">
+                <div class="product-info">
+                    <span class="eco-tag">Recyklovaný materiál</span>
+                    <div class="product-name">Blacktracksuit</div>
+                    <div class="product-price">1 490 Kč</div>
+                    <a href="#" class="buy-button">DO KOŠÍKU</a>
+                </div>
+            </div>
 
-function randomImage(category) {
-  return `https://source.unsplash.com/300x300/?${category},clothing`;
-}
+            <div class="product-card">
+                <img src="Whitetracksuit.png" alt="Whitetracksuit" class="product-image">
+                <div class="product-info">
+                    <span class="eco-tag">Recyklovaný materiál</span>
+                    <div class="product-name">Whitetracksuit</div>
+                    <div class="product-price">1 490 Kč</div>
+                    <a href="#" class="buy-button">DO KOŠÍKU</a>
+                </div>
+            </div>
 
-function generateProducts() {
-  const container = document.getElementById("products");
+        </div>
+    </div>
 
-  for (let i = 0; i < 9; i++) {
-    const item = items[Math.floor(Math.random() * items.length)];
-
-    const div = document.createElement("div");
-    div.className = "product";
-
-    div.innerHTML = `
-      <img src="${randomImage(item.category)}" alt="${item.name}">
-      <h3>${item.name}</h3>
-      <p class="price">${item.price} Kč</p>
-    `;
-
-    container.appendChild(div);
-  }
-}
-
-generateProducts();
-</script>
+    <footer>
+        &copy; 2026 HELLO WORLD. Všechna práva vyhrazena.
+    </footer>
 
 </body>
 </html>
